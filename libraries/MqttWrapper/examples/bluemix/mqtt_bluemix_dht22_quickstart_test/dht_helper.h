@@ -1,8 +1,10 @@
 #include "DHT.h"
 
-#define DHTPIN 2     // what pin we're connected to
-#define DHTTYPE DHT22   // DHT 22  (AM2302)
+#define DHTPIN 14         // what pin we're connected to dht's data pin
+#define DHTPIN_VDD 16     // what pin we're connected to dht's vcc pin
+#define DHTPIN_GND 12     // what pin we're connected to dht's gnd pin
 
+#define DHTTYPE DHT22   // DHT 22  (AM2302)
 
 void init_dht(DHT **dht, uint8_t pin, uint8_t dht_type)
 {
@@ -22,6 +24,9 @@ void init_dht(DHT **dht, uint8_t pin, uint8_t dht_type)
     // Arduino Due that runs at 84mhz a value of 30 works.
     // Example to initialize DHT sensor for Arduino Due:
     //DHT dht(DHTPIN, DHTTYPE, 30);
+    pinMode(DHTPIN_VDD, OUTPUT);
+    pinMode(DHTPIN_GND, OUTPUT);  
+    digitalWrite(DHTPIN_VDD, HIGH);
 
     *dht = new DHT(pin, dht_type, 30);
     (*dht)->begin();
