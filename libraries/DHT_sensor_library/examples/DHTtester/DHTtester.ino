@@ -3,7 +3,9 @@
 
 #include "DHT.h"
 
-#define DHTPIN 2     // what pin we're connected to
+#define DHTPIN 14         // what pin we're connected to dht's data pin
+#define DHTPIN_VDD 16     // what pin we're connected to dht's vcc pin
+#define DHTPIN_GND 13     // what pin we're connected to dht's gnd pin
 
 // Uncomment whatever type you're using!
 //#define DHTTYPE DHT11   // DHT 11
@@ -18,7 +20,7 @@
 // Connect a 10K resistor from pin 2 (data) to pin 1 (power) of the sensor
 
 // Initialize DHT sensor for normal 16mhz Arduino
-DHT dht(DHTPIN, DHTTYPE);
+//DHT dht(DHTPIN, DHTTYPE);
 // NOTE: For working with a faster chip, like an Arduino Due or Teensy, you
 // might need to increase the threshold for cycle counts considered a 1 or 0.
 // You can do this by passing a 3rd parameter for this threshold.  It's a bit
@@ -26,9 +28,15 @@ DHT dht(DHTPIN, DHTTYPE);
 // higher the value.  The default for a 16mhz AVR is a value of 6.  For an
 // Arduino Due that runs at 84mhz a value of 30 works.
 // Example to initialize DHT sensor for Arduino Due:
-//DHT dht(DHTPIN, DHTTYPE, 30);
+DHT dht(DHTPIN, DHTTYPE, 30);
 
 void setup() {
+	// power to dht 
+  pinMode(DHTPIN_VDD, OUTPUT);
+  pinMode(DHTPIN_GND, OUTPUT);  
+  digitalWrite(DHTPIN_VDD, HIGH);
+  delay(100);                       // waiting for dht start up.
+  
   Serial.begin(9600);
   Serial.println("DHTxx test!");
 
