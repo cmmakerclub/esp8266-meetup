@@ -17,7 +17,7 @@ void hook_configuration(MqttWrapper::Config config)
     *(config.topicPub)  = "iot-2/evt/status/fmt/json";
     
     String url  = String("https://quickstart.internetofthings.");
-           url += String("ibmcloud.com/#/device/")+String(macAddr)+String("/sensor/");
+           url += String("ibmcloud.com/#/device/")+macAddr+String("/sensor/");
 
     Serial.println(url);
 }
