@@ -42,6 +42,7 @@ PubSubClient client(server);
 
 // Pins
 int outPin = 16; // led
+int inPin = 14; // Switch
  
 // Logic
 int state = HIGH;     // current state of the output pin
@@ -49,6 +50,9 @@ int reading;          // current reading from the input pin
 int previous = LOW;   // previous reading from the input pin
 long time = 0;        // the last time the output pin was toggled
 long debounce = 200;  // the debounce time, increase if the output flickers
+
+int currentSwitch = HIGH;
+int lastSwitch = HIGH;
 
 // Callback
 void callback(const MQTT::Publish& pub) {
@@ -111,11 +115,34 @@ void setup() {
   // MQTT server connection
   lelylanConnection();      
   pinMode(outPin, OUTPUT);  // led pin setup
+  pinMode(inPin, INPUT_PULLUP);
 }
  
 void loop() {
   // Keep connection open
   lelylanConnection();
+
+  if( digitalRead(inPin) == HIGH ) {
+    currentSwitch = HIGH;
+  }
+  else {
+    currentSwitch = LOW;
+  }
+  if( currentSwitch != lastSwitch ) {
+    lastSwitch = currentSwitch;
+    if( currentSwitch == HIGH ) {
+      Serial.println( "Switch" );
+      int state = digitalRead(outPin);
+      if( state == HIGH ) {
+        digitalWrite(outPin, LOW);
+        lelylanPublish("off");      
+      }
+      else {
+        digitalWrite(outPin, HIGH);
+        lelylanPublish("on");      
+      }
+    }
+  }
 }
  
 /* MQTT server connection */
