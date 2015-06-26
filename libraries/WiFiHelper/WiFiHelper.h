@@ -102,6 +102,8 @@ public:
         _user_on_connecting = callback;
     }
 
+    String get( const char *host, const char *path );
+    
 protected:
 
 private:
