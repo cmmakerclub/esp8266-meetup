@@ -5,7 +5,7 @@
 
 #define DHTPIN 14         // what pin we're connected to dht's data pin
 #define DHTPIN_VDD 16     // what pin we're connected to dht's vcc pin
-#define DHTPIN_GND 13     // what pin we're connected to dht's gnd pin
+#define DHTPIN_GND 12     // what pin we're connected to dht's gnd pin
 
 // Uncomment whatever type you're using!
 //#define DHTTYPE DHT11   // DHT 11
