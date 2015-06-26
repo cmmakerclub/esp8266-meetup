@@ -12,12 +12,12 @@ void hook_configuration(MqttWrapper::Config config)
 
     // d:quickstart:<type-id>:<device-id>
     *(config.clientId)  = String("d:quickstart:esp8266meetup:");
-    *(config.clientId) += macAddr;
+    *(config.clientId) += String(macAddr);
 
     *(config.topicPub)  = "iot-2/evt/status/fmt/json";
     
     String url  = String("https://quickstart.internetofthings.");
-           url += "ibmcloud.com/#/device/"+ macAddr +"/sensor/";
+           url += String("ibmcloud.com/#/device/")+String(macAddr)+String("/sensor/");
 
     Serial.println(url);
 }
